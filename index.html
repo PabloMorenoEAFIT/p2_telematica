@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Acceso y Registro</title>
+  <!---Custom CSS File--->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <input type="checkbox" id="check">
+    <div class="login form">
+      <header>Acceder</header>
+      <form action="#">
+        <input type="text" placeholder="Ingresa tu correo">
+        <input type="password" placeholder="Ingresa tu contraseña">
+        <a href="#">Olvidaste la contraseña?</a>
+        <input type="button" class="button" value="acceder">
+      </form>
+      <div class="signup">
+        <span class="signup">¿No tienes cuenta?
+         <label for="check">Registrarse</label>
+        </span>
+      </div>
+    </div>
+    <div class="registration form">
+      <header>Registrarse</header>
+      <form action="#">
+        <input type="text" placeholder="Ingresa tu correo">
+        <input type="password" placeholder="Crea una contraseña">
+        <input type="password" placeholder="Crea una contraseña">
+        <input type="button" class="button" value="Registrarse">
+      </form>
+      <div class="signup">
+        <span class="signup">¿Ya tienes una cuenta?
+         <label for="check">Acceder</label>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const registerForm = document.getElementById('registerForm');
+      const loginForm = document.getElementById('loginForm');
+
+      registerForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        // Validar que las contraseñas coincidan
+        if (password !== confirmPassword) {
+          alert('Las contraseñas no coinciden');
+          return;
+        }
+
+        fetch('/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log('Usuario registrado correctamente');
+            // Aquí puedes redirigir al usuario o mostrar un mensaje de éxito
+          } else {
+            console.error('Error al registrar usuario');
+            // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
+          }
+        })
+        .catch(error => {
+          console.error('Error en la solicitud:', error);
+        });
+      });
+
+      loginForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log('Usuario autenticado correctamente');
+            // Aquí puedes redirigir al usuario o mostrar un mensaje de éxito
+          } else {
+            console.error('Error al autenticar usuario');
+            // Aquí puedes manejar el error, como mostrar un mensaje de error al usuario
+          }
+        })
+        .catch(error => {
+          console.error('Error en la solicitud:', error);
+        });
+      });
+    });
+
+    </script>
+
+</body>
+</html>
