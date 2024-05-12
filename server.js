@@ -6,10 +6,10 @@ const port = 3000;
 
 // Configuración de la conexión a la base de datos MySQL
 const db = mysql.createConnection({
-  host: 'direccion_IP_o_nombre_de_host',
-  user: 'tu_usuario',
-  password: 'tu_contraseña',
-  database: 'nombre_de_tu_base_de_datos'
+  host: 'localhost', // Si la base de datos está en la misma instancia EC2, usa 'localhost'
+  user: 'root',
+  password: '',
+  database: 'acceso_y_registro_p2'
 });
 
 // Conectar a la base de datos
